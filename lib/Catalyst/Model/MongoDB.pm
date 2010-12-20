@@ -6,8 +6,6 @@ use Moose;
 
 BEGIN { extends 'Catalyst::Model' }
 
-our $VERSION = '0.08';
-
 has host           => ( isa => 'Str', is => 'ro', required => 1, default => sub { 'localhost' } );
 has port           => ( isa => 'Int', is => 'ro', required => 1, default => sub { 27017 } );
 has dbname         => ( isa => 'Str', is => 'ro' );
