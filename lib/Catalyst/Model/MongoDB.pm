@@ -25,9 +25,9 @@ sub _build_connection {
   return MongoDB::Connection->new(
     host     => $self->host,
     port     => $self->port,
-    db_name  => $self->dbname,
-    username => $self->username,
-    password => $self->password,
+    ( $self->dbname   ? ( dbname   => $self->dbname   ) : () ),
+    ( $self->username ? ( username => $self->username ) : () ),
+    ( $self->password ? ( password => $self->password ) : () ),
   );
 }
 
