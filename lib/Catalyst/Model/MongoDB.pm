@@ -53,7 +53,10 @@ sub collection {
   my ( $self, $param ) = @_;
   my $dbname;
   my $collname;
-  my @params = split(/\./,$param);
+  my @params;
+  if ($param) {
+	@params = split(/\./,$param)
+  }
   if (@params > 1) {
 	$dbname = $params[0];
 	$collname = $params[1];
