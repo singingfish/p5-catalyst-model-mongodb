@@ -11,8 +11,8 @@ has port           => ( isa => 'Int', is => 'ro', required => 1, default => sub 
 has dbname         => ( isa => 'Str', is => 'ro' );
 has collectionname => ( isa => 'Str', is => 'ro' );
 has gridfsname     => ( isa => 'Str', is => 'ro' );
-has username       => ( isa => 'Str', is => 'ro', default => sub { '' } );
-has password       => ( isa => 'Str', is => 'ro', default => sub { '' } );
+has username       => ( isa => 'Str', is => 'ro', predicate => 'has_username' );
+has password       => ( isa => 'Str', is => 'ro', predicate => 'has_password' );
 
 has 'connection' => (
   isa => 'MongoDB::Connection',
@@ -22,13 +22,20 @@ has 'connection' => (
 
 sub _build_connection {
   my ($self) = @_;
-  return MongoDB::Connection->new(
-    host     => $self->host,
-    port     => $self->port,
-    ( $self->dbname   ? ( dbname   => $self->dbname   ) : () ),
-    ( $self->username ? ( username => $self->username ) : () ),
-    ( $self->password ? ( password => $self->password ) : () ),
+
+  my $conn = MongoDB::Connnection->new(
+      host => $self->host,
+      port => $self->port,
+      ( $self->dbname ? ( dbname => $self->dbname ) : () ),
   );
+
+  # attempt authentication only if we have all three parameters for
+  # MongoDB::Connection->authenticate()
+  if ($self->dbname && $self->has_username && $self->has_password) {
+      $conn->authenticate($self->dbname, $self->username, $self->password);
+  }
+
+  return $conn;
 }
 
 has 'dbs' => (
@@ -176,6 +183,12 @@ You can pass the same configuration fields as when you make a new L<MongoDB::Con
 
 In addition you can also give a database name via dbname, a collection name via collectioname or 
 a gridfs name via gridfsname.
+
+=head2 AUTHENTICATION
+
+If all three of C<username>, C<password>, and C<dbname> are present, this class
+will authenticate via MongoDB::Connection->authenticate().  (See
+L<MongoDB::Connection|MongoDB::Connection> for details).
 
 =head1 METHODS
 
