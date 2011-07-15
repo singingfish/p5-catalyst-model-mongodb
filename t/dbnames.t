@@ -5,7 +5,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 5;
+use Test::More tests => 7;
 
 BEGIN {
     use_ok('Catalyst::Model::MongoDB');
@@ -29,11 +29,18 @@ eval '
 # If there is a database available, make reference to a collection
 #
 SKIP: {
-  skip 'No local database available for testing', 3 unless $testdb;
+  skip 'No local database available for testing', 5 unless $testdb;
   my $db = new_ok( 'Catalyst::Model::MongoDB' =>[
     dbname => $testdb,
   ] );
   ok ( $db, "database name" );
   my $coll = $db->collection('test');
   ok ( $coll, "Collection name" );
+
+  $coll = $db->c('test');
+  ok ( $coll, "Collection name" );
+
+  $coll = $db->coll('test');
+  ok ( $coll, "Collection name" );
+
 };
