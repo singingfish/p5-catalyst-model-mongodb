@@ -54,8 +54,8 @@ sub db {
   return $self->dbs->{$dbname};
 }
 
-sub c { shift->collection(@_) }
-sub coll { shift->collection(@_) }
+*c = \&collection;
+*coll = \&collection;
 sub collection {
   my ( $self, $param ) = @_;
   my $dbname;
@@ -92,14 +92,14 @@ sub eval {
   $self->db->eval(@params);
 }
 
-sub collnames { shift->collection_names(@_) }
+*collnames = \&collection_names;
 sub collection_names {
   my ( $self, @params ) = @_;
   confess "no dbname given via config" if !$self->dbname;
   $self->db->collection_names(@params);
 }
 
-sub g { shift->gridfs(@_) }
+*g = \&gridfs;
 sub gridfs {
   my ( $self, $param ) = @_;
   my $dbname;
@@ -121,7 +121,7 @@ sub gridfs {
   $self->db($dbname)->get_gridfs($gridfsname);
 }
 
-sub dbnames { shift->database_names(@_) }
+*dbnames = \&database_names;
 sub database_names {
   my ( $self ) = @_;
   $self->connection->database_names;
