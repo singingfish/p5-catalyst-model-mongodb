@@ -132,6 +132,11 @@ sub oid {
   return MongoDB::OID->new( value => $_id );
 }
 
+sub authenticate {
+  my( $self, @params ) = @_;
+  return $self->connection->authenticate(@params);
+}
+
 1;
 
 =pod
@@ -238,6 +243,11 @@ if you need this please do:
 =head2 oid
 
 Creates MongoDB::OID object
+
+=head2 authenticate
+
+[re]authenticate after the initial connection, or
+authenticate to multiple databases within the same model.
 
 =head1 SUPPORT
 
