@@ -13,6 +13,7 @@ has collectionname => ( isa => 'Str', is => 'ro' );
 has gridfsname     => ( isa => 'Str', is => 'ro' );
 has username       => ( isa => 'Str', is => 'ro', predicate => 'has_username' );
 has password       => ( isa => 'Str', is => 'ro', predicate => 'has_password' );
+has find_master    => ( isa => 'Int', is => 'ro', default => sub { 0 } );
 
 has 'connection' => (
   isa => 'MongoDB::Connection',
@@ -26,6 +27,7 @@ sub _build_connection {
   my $conn = MongoDB::Connnection->new(
       host => $self->host,
       port => $self->port,
+      find_master => $self->find_master,
       ( $self->dbname ? ( dbname => $self->dbname ) : () ),
   );
 
