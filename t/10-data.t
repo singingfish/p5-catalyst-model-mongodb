@@ -1,7 +1,6 @@
 #!perl -T
 
-# Verify to create object with no dbnames, to list which dbnames exist.
-# Verify to create object with dbname and define collection
+#Do a write to a local test database and check that the data wrote correctly
 
 use strict;
 use warnings;
@@ -29,7 +28,7 @@ eval '
 ';
 
 # If there is a database available, make reference to a collection
-#
+# then do an insert() and a find_one()
 SKIP: {
   skip 'No local database available for testing', 5 unless $testdb;
   my $db = new_ok( 'Catalyst::Model::MongoDB' =>[
