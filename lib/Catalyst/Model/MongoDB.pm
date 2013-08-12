@@ -15,7 +15,7 @@ has username       => ( isa => 'Str', is => 'ro', predicate => 'has_username' );
 has password       => ( isa => 'Str', is => 'ro', predicate => 'has_password' );
 
 has 'connection' => (
-  isa => 'MongoDB::Connection',
+  isa => 'MongoDB::MongoClient',
   is => 'rw',
   lazy_build => 1,
 );
@@ -23,7 +23,7 @@ has 'connection' => (
 sub _build_connection {
   my ($self) = @_;
 
-  my $conn = MongoDB::Connnection->new(
+  my $conn = MongoDB::MongoClient->new(
       host => $self->host,
       port => $self->port,
       ( $self->dbname ? ( dbname => $self->dbname ) : () ),
@@ -159,7 +159,7 @@ sub authenticate {
     #
     # Usage
     #
-    $c->model('MyModel')->db                           # returns MongoDB::Connection->mydatabase
+    $c->model('MyModel')->db                           # returns MongoDB::MongoClient->get_database
     $c->model('MyModel')->db('otherdb')                # returns ->otherdb
     $c->model('MyModel')->collection                   # returns ->mydatabase->preferedcollection
     $c->model('MyModel')->coll                         # the same...
@@ -180,11 +180,11 @@ sub authenticate {
 
 =head1 DESCRIPTION
 
-This model class exposes L<MongoDB::Connection> as a Catalyst model.
+This model class exposes L<MongoDB::MongoClient> as a Catalyst model.
 
 =head1 CONFIGURATION
 
-You can pass the same configuration fields as when you make a new L<MongoDB::Connection>.
+You can pass the same configuration fields as when you make a new L<MongoDB::MongoClient>.
 
 In addition you can also give a database name via dbname, a collection name via collectioname or 
 a gridfs name via gridfsname.
@@ -192,8 +192,8 @@ a gridfs name via gridfsname.
 =head2 AUTHENTICATION
 
 If all three of C<username>, C<password>, and C<dbname> are present, this class
-will authenticate via MongoDB::Connection->authenticate().  (See
-L<MongoDB::Connection|MongoDB::Connection> for details).
+will authenticate via MongoDB::MongoClient->authenticate().  (See
+L<MongoDB::MongoClient|MongoDB::MongoClient> for details).
 
 =head1 METHODS
 
