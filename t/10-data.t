@@ -4,7 +4,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 8;
+use Test::More tests => 7;
 
 my $COLLECTION_NAME = 'test_Catalyst_Model_MongoDB';
 
