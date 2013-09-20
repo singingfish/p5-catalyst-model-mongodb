@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.08      2013-09-20 16:46:27 Asia/Tokyo
 	- Added functionality for authenticating (setting username and password) and setting the db_name value which didnt exist (magnachef)
 
 0.07      2010-12-08 02:19:02 Europe/Berlin
