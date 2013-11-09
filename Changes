@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+	- Fix test count
 
 0.12      2013-09-20 22:36:40 Asia/Tokyo
         - Support find_master, so you can actually use replica sets properly. (Matthew Keller)
