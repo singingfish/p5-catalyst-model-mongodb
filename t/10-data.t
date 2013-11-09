@@ -4,7 +4,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 7;
+use Test::More tests => 8;
 
 my $COLLECTION_NAME = 'test_Catalyst_Model_MongoDB';
 
@@ -30,7 +30,7 @@ eval '
 # If there is a database available, make reference to a collection
 # then do an insert() and a find_one()
 SKIP: {
-  skip 'No local database available for testing', 5 unless $testdb;
+  skip 'No local database available for testing', 6 unless $testdb;
   my $db = new_ok( 'Catalyst::Model::MongoDB' =>[
     dbname => $testdb,
   ] );
