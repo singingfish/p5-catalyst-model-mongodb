@@ -1,7 +1,8 @@
 Revision history for {{$dist->name}}
 
-{{$NEXT}}
+0.13      2015-10-27
 	- Fix test count
+        - Make compatible with MongoDB >= v 1.0 (ZARQUON)
 
 0.12      2013-09-20 22:36:40 Asia/Tokyo
         - Support find_master, so you can actually use replica sets properly. (Matthew Keller)

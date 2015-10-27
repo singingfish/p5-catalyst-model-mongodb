@@ -1,4 +1,5 @@
 package Catalyst::Helper::Model::MongoDB;
+
 # ABSTRACT: Helper for MongoDB models
 use strict;
 use warnings;
@@ -54,15 +55,6 @@ sub mk_comptest {
 IRC
 
   Join #catalyst on irc.perl.org and ask for Getty.
-
-Repository
-
-  http://github.com/Getty/p5-catalyst-model-mongodb
-  Pull request and additional contributors are welcome
- 
-Issue Tracker
-
-  http://github.com/Getty/p5-catalyst-model-mongodb/issues
 
 =cut
 

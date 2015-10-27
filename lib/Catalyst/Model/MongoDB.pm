@@ -1,8 +1,10 @@
 package Catalyst::Model::MongoDB;
+
 # ABSTRACT: MongoDB model class for Catalyst
 use MongoDB;
 use MongoDB::OID;
 use Moose;
+use version;
 
 BEGIN { extends 'Catalyst::Model' }
 
@@ -34,7 +36,8 @@ sub _build_connection {
   # attempt authentication only if we have all three parameters for
   # MongoDB::Connection->authenticate()
   if ($self->dbname && $self->has_username && $self->has_password) {
-      $conn->authenticate($self->dbname, $self->username, $self->password);
+      $conn->authenticate($self->dbname, $self->username, $self->password)
+          if version->parse($MongoDB::VERSION) < 1.0;
   }
 
   return $conn;
@@ -259,11 +262,11 @@ IRC
 
 Repository
 
-  http://github.com/Getty/p5-catalyst-model-mongodb
+  http://github.com/singingfish/p5-catalyst-model-mongodb
   Pull request and additional contributors are welcome
  
 Issue Tracker
 
-  http://github.com/Getty/p5-catalyst-model-mongodb/issues
+  http://github.com/singingfish/p5-catalyst-model-mongodb/issues
 
 =cut
