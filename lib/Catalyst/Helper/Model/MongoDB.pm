@@ -28,6 +28,8 @@ Makes tests.
 
 =cut
 
+our $VERSION = '0.14';
+
 sub mk_compclass {
     my ( $self, $helper, $host, $port, $dbname, $collectionname, $gridfs ) = @_;
 
