@@ -26,18 +26,30 @@ has 'connection' => (
 sub _build_connection {
   my ($self) = @_;
 
-  my $conn = MongoDB::MongoClient->new(
-      host => $self->host,
-      port => $self->port,
-      find_master => $self->find_master,
-      ( $self->dbname ? ( dbname => $self->dbname ) : () ),
-  );
+  my $conn = version->parse($MongoDB::VERSION) < 1.0 ?
+      MongoDB::MongoClient->new(
+        host => $self->host,
+        port => $self->port,
+        find_master => $self->find_master,
+        ( $self->dbname ? ( dbname => $self->dbname ) : () ),
+      ) :
+      MongoDB::MongoClient->new(
+        host => $self->host,
+        port => $self->port,
+        find_master => $self->find_master,
+        ( $self->dbname ? ( db_name => $self->dbname ) : () ),
+        ( $self->has_username ? ( username => $self->username ) : () ),
+        ( $self->has_password ? ( password => $self->password ) : () ),
+      );
+        
 
   # attempt authentication only if we have all three parameters for
   # MongoDB::Connection->authenticate()
   if ($self->dbname && $self->has_username && $self->has_password) {
       $conn->authenticate($self->dbname, $self->username, $self->password)
           if version->parse($MongoDB::VERSION) < 1.0;
+      $conn->connect
+          if version->parse($MongoDB::VERSION) > 1.0;
   }
 
   return $conn;
